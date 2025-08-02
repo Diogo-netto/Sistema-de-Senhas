@@ -43,48 +43,7 @@ body {
   border-width: 0;
 }
 
-/* === 2. RESPONSIVIDADE === */
-@media (max-width: 768px) {
-  .container {
-    grid-template-columns: 1fr;
-    height: auto;
-    padding-bottom: 1rem;
-  }
 
-  .senhas-container {
-    grid-template-columns: 1fr;
-  }
-
-  .painel-lateral {
-    order: -1;
-  }
-
-  .btn-config {
-    bottom: 1rem;
-    right: 1rem;
-  }
-
-  .modal-content {
-    width: 95%;
-  }
-}
-
-@media (max-width: 480px) {
-  .controles-card {
-    flex-direction: column;
-  }
-
-  .header-content, .footer-content {
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-  }
-
-  .title-section h1 {
-    padding: 10px;
-    font-size: 1.2rem;
-  }
-}
 
 /* === 3. FEEDBACK VISUAL === */
 /* Animação para senha chamada */
@@ -180,14 +139,7 @@ body {
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
-/* === RESPEITANDO PREFERÊNCIAS DE REDUÇÃO DE MOVIMENTO === */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
+
 
 /* Cabeçalho - Altura fixa e reduzida */
 .header {
