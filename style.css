@@ -1,0 +1,789 @@
+/* Reset e Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  height: 100vh;
+  overflow: hidden;
+  color: #1e293b;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* === 1. SEGURANÇA === */
+.no-script-warning {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #dc2626;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  z-index: 1000;
+  font-weight: bold;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* === 2. RESPONSIVIDADE === */
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+    height: auto;
+    padding-bottom: 1rem;
+  }
+
+  .senhas-container {
+    grid-template-columns: 1fr;
+  }
+
+  .painel-lateral {
+    order: -1;
+  }
+
+  .btn-config {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .modal-content {
+    width: 95%;
+  }
+}
+
+@media (max-width: 480px) {
+  .controles-card {
+    flex-direction: column;
+  }
+
+  .header-content, .footer-content {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  .title-section h1 {
+    padding: 10px;
+    font-size: 1.2rem;
+  }
+}
+
+/* === 3. FEEDBACK VISUAL === */
+/* Animação para senha chamada */
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+  70% { transform: scale(1.02); box-shadow: 0 0 0 15px rgba(220, 38, 38, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+}
+
+.senha-chamada {
+  animation: pulse 1.5s ease infinite;
+}
+
+/* Notificações */
+.notificacao {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  z-index: 1001;
+  transform: translateX(100%);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  max-width: 350px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+}
+
+.notificacao.active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.notificacao-success {
+  background-color: #059669;
+}
+
+.notificacao-error {
+  background-color: #dc2626;
+}
+
+.notificacao-warning {
+  background-color: #d97706;
+}
+
+.notificacao-info {
+  background-color: #2563eb;
+}
+
+/* === 4. TRATAMENTO DE ERROS === */
+.error-state {
+  border: 2px dashed #dc2626 !important;
+  background-color: #fee2e2 !important;
+}
+
+.loading-state {
+  position: relative;
+  pointer-events: none;
+}
+
+.loading-state::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 3px solid rgba(59, 130, 246, 0.2);
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* === SELECTOR DE LÍNGUA (ADICIONADO) === */
+.config-item select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+}
+
+.config-item select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* === RESPEITANDO PREFERÊNCIAS DE REDUÇÃO DE MOVIMENTO === */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Cabeçalho - Altura fixa e reduzida */
+.header {
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+  color: white;
+  padding: 8px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.header-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-section i {
+  font-size: 1.8rem;
+  color: #60a5fa;
+}
+
+.title-section h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.1rem;
+  padding: 30px;
+}
+
+
+
+.status-section {
+  display: flex;
+  gap: 1rem;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.4rem 0.8rem;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.status-item i {
+  font-size: 1rem;
+}
+
+/* Container Principal - Usa o espaço restante */
+.container {
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 1rem;
+  flex: 1;
+  overflow: hidden;
+  height: calc(100vh - 120px); /* Altura total menos header e footer */
+}
+
+/* Área das Senhas */
+.senhas-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Cards de Senha - Altura controlada */
+.senha-card {
+  background: white;
+  border-radius: 15px;
+  padding: 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  border: 2px solid transparent;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.senha-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Card Prioritário */
+.senha-card.prioridade {
+  border-color: #dc2626;
+}
+
+.senha-card.prioridade .card-header {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: white;
+}
+
+.senha-card.prioridade .numero {
+  color: #dc2626;
+}
+
+/* Card Comum */
+.senha-card.comum {
+  border-color: #059669;
+}
+
+.senha-card.comum .card-header {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  color: white;
+}
+
+.senha-card.comum .numero {
+  color: #059669;
+}
+
+/* Cabeçalho do Card */
+.card-header {
+  padding: 0.8rem 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header-left i {
+  font-size: 1.2rem;
+}
+
+.header-left h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Display da Senha */
+.senha-display {
+  padding: 1rem;
+  text-align: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: rgb(0, 0, 0);
+  
+}
+
+.senha-atual {
+  margin-bottom: 1rem;
+}
+
+.senha-atual .label {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  opacity: 0.7;
+}
+
+.numero {
+  font-size: 3.2rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.proximas-senhas .label {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  opacity: 0.7;
+}
+
+.lista-proximas {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.senha-item {
+  background: #f1f5f9;
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: #000000;
+}
+
+/* Controles do Card */
+.controles-card {
+  padding: 0.8rem 1.2rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+/* Botões */
+.btn {
+  flex: 1;
+  min-width: 150px;
+  padding: 0.6rem 0.8rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  text-decoration: none;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-gerar {
+  background: linear-gradient(135deg, #3b82f6 0%, #0643ec 100%);
+  color: white;
+}
+
+.btn-chamar {
+  background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+  color: white;
+}
+
+.btn-repetir {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+}
+
+.btn-reset {
+  background: linear-gradient(135deg, #ff3d02 0%, #ff0000 100%);
+  color: white;
+}
+
+
+/* Botão de reset da Fila Comum - VERDE */
+#reset-comum {
+  background: linear-gradient(135deg, #059669, #047857); /* Verde */
+}
+
+.btn-reset-all {
+  background: linear-gradient(135deg, #8800f8 0%, #8800f8 100%);
+  color: white;
+}
+
+.btn-confirmar {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  color: white;
+}
+
+/* Painel Lateral */
+.painel-lateral {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Seções do Painel */
+.admin-section,
+.entrada-section,
+.historico-section {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+}
+
+.historico-section {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+  color: #374151;
+  font-weight: 600;
+}
+
+.section-title i {
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+.section-title h4 {
+  font-size: 0.9rem;
+}
+
+/* Botões Administrativos */
+.admin-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.admin-buttons .btn {
+  min-width: auto;
+  padding: 0.5rem 0.8rem;
+  font-size: 0.7rem;
+}
+
+
+
+/* Histórico */
+.historico-lista {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.historico-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  margin-bottom: 0.3rem;
+  background: #f8fafc;
+  border-radius: 6px;
+  font-size: 1.0rem;
+}
+
+.historico-item .senha {
+  font-weight: 600;
+  color: #000000;
+}
+
+.historico-item .hora {
+  color: #000000;
+  font-size: 0.6rem;
+}
+
+/* Rodapé - Altura fixa */
+.footer {
+  background: linear-gradient(135deg,  #1e3a8a 0%,  #1e3a8a 100%);
+  color: white;
+  padding: 1.9rem 0;
+  flex-shrink: 0;
+  min-height: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-weight: 700;
+}
+
+.footer-left,
+.footer-right {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 1.3rem;
+}
+
+
+/* Modal de Configurações */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modal.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 15px;
+  padding: 0;
+  max-width: 400px;
+  width: 90%;
+  max-height: 70vh;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+  color: white;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.3rem;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+
+.btn-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-body {
+  padding: 1.5rem;
+  max-height: calc(70vh - 80px);
+  overflow-y: auto;
+}
+
+.config-item {
+  margin-bottom: 1rem;
+}
+
+.config-item label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.config-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.config-item input[type="range"] {
+  width: 100%;
+  margin-top: 0.3rem;
+}
+
+/* Botão de Configurações */
+.btn-config {
+  position: fixed;
+  bottom: 18rem;
+  right: 1rem;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+  color: white;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.btn-config:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Animações */
+.senha-chamada {
+  animation: destaque-chamada 2s ease-in-out;
+}
+
+@keyframes destaque-chamada {
+  0%, 100% { 
+    transform: scale(1);
+  }
+  50% { 
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  }
+}
+
+
+/* Estados especiais */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+  position: relative;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 15px;
+  height: 15px;
+  margin: -7.5px 0 0 -7.5px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Scrollbar personalizada */
+.historico-lista::-webkit-scrollbar {
+  width: 4px;
+}
+
+.historico-lista::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 2px;
+}
+
+.historico-lista::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 2px;
+}
+
+.historico-lista::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Garantir que nada ultrapasse a viewport */
+html, body {
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* Ajustes finais para eliminar qualquer rolagem */
+.container, .senhas-container, .painel-lateral {
+  min-height: 0;
+}
+
+/* Forçar que todos os elementos filhos respeitem o container pai */
+* {
+  max-width: 100%;
+  max-height: 100%;
+}

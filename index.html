@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+
+<head>
+  <!-- Metadados de segurança reforçados -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://cdn.jsdelivr.net; connect-src 'self'; media-src 'self';">
+  <meta name="description" content="Sistema de Senhas para atendimento médico com prioridades e senhas comuns.">
+  <meta name="theme-color" content="#1e40af">
+  
+  <!-- Preload de recursos críticos -->
+  <link rel="preload" href="style.css" as="style">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" as="style">
+  <link rel="preload" href="script.js" as="script">
+  
+  <title>Sistema de Senhas - Atendimento Médico</title>
+  
+  <!-- Favicon e meta tags para PWA -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏥</text></svg>">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" />
+</head>
+
+
+
+<body>
+  <!-- Aviso para JS desativado -->
+  <noscript>
+    <div class="no-script-warning">
+      ⚠️ Este sistema requer JavaScript para funcionar corretamente. Por favor, ative-o no seu navegador.
+    </div>
+  </noscript>
+
+
+  <!-- Cabeçalho com ARIA labels -->
+  <header class="header" role="banner" aria-label="Cabeçalho do sistema">
+    <div class="header-content">
+      <div class="logo-section">
+        <i class="bi bi-hospital" aria-hidden="true"></i>
+        <div class="title-section">
+          <h1 id="main-title">Painel de Senhas</h1>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Container Principal com roles ARIA -->
+  <div class="container" role="main" aria-labelledby="main-title">
+
+    <!-- Área das Senhas -->
+    <main class="senhas-container" aria-label="Painel de senhas">
+      <!-- Senhas Prioritárias -->
+      <section class="senha-card prioridade" aria-labelledby="prioridade-title">
+        <div class="card-header">
+          <div class="header-left">
+            <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+            <h3 id="prioridade-title">Atendimento Prioritário</h3>
+          </div>
+        </div>
+        
+        <div class="senha-display">
+          <div class="senha-atual" aria-live="polite">
+            <span class="label">Senha Atual</span>
+            <div class="numero" id="senha-prioridade-atual" aria-label="Senha prioritária atual">P000</div>
+          </div>
+          
+          <div class="proximas-senhas">
+            <span class="label">Próximas</span>
+            <div class="lista-proximas" id="proximas-prioridade" aria-label="Próximas senhas prioritárias">
+              <span class="senha-item">Nenhuma</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="controles-card">
+          <button class="btn btn-gerar" id="gerar-prioridade" aria-label="Gerar senha prioritária">
+            <i class="bi bi-plus-circle" aria-hidden="true"></i>
+            Gerar Senha
+          </button>
+          <button class="btn btn-chamar" id="chamar-prioridade" aria-label="Chamar próxima senha prioritária">
+            <i class="bi bi-megaphone" aria-hidden="true"></i>
+            Chamar Próxima
+          </button>
+          <button class="btn btn-repetir" id="repetir-prioridade" aria-label="Repetir chamada prioritária">
+            <i class="bi bi-arrow-repeat" aria-hidden="true"></i>
+            Repetir
+          </button>
+        </div>
+      </section>
+
+
+
+      <!-- Senhas Comuns -->
+      <section class="senha-card comum" aria-labelledby="comum-title">
+        <div class="card-header">
+          <div class="header-left">
+            <i class="bi bi-person-check" aria-hidden="true"></i>
+            <h3 id="comum-title">Atendimento Geral</h3>
+          </div>
+        </div>
+        
+        <div class="senha-display">
+          <div class="senha-atual" aria-live="polite">
+            <span class="label">Senha Atual</span>
+            <div class="numero" id="senha-comum-atual" aria-label="Senha comum atual">C000</div>
+          </div>
+          
+          <div class="proximas-senhas">
+            <span class="label">Próximas</span>
+            <div class="lista-proximas" id="proximas-comum" aria-label="Próximas senhas comuns">
+              <span class="senha-item">Nenhuma</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="controles-card">
+          <button class="btn btn-gerar" id="gerar-comum" aria-label="Gerar senha comum">
+            <i class="bi bi-plus-circle" aria-hidden="true"></i>
+            Gerar Senha
+          </button>
+          <button class="btn btn-chamar" id="chamar-comum" aria-label="Chamar próxima senha comum">
+            <i class="bi bi-megaphone" aria-hidden="true"></i>
+            Chamar Próxima
+          </button>
+          <button class="btn btn-repetir" id="repetir-comum" aria-label="Repetir chamada comum">
+            <i class="bi bi-arrow-repeat" aria-hidden="true"></i>
+            Repetir
+          </button>
+        </div>
+      </section>
+    </main>
+
+
+
+
+
+    <!-- Painel Lateral -->
+    <aside class="painel-lateral" aria-label="Painel de controle">
+      <!-- Controles Administrativos -->
+      <div class="admin-section">
+        <div class="section-title">
+          <i class="bi bi-gear" aria-hidden="true"></i>
+          <h4>Controles</h4>
+        </div>
+        
+        <div class="admin-buttons">
+          <button class="btn btn-reset" id="reset-prioridade" aria-label="Resetar fila prioritária">
+            <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>
+            Zerar Fila Prioritária
+          </button>
+          <button class="btn btn-reset" id="reset-comum" aria-label="Resetar fila comum">
+            <i class="bi bi-arrow-clockwise" aria-hidden="true"></i>
+            Zerar Fila Geral
+          </button>
+          <button class="btn btn-reset-all" id="reset-tudo" aria-label="Resetar todo o sistema">
+            <i class="bi bi-bootstrap-reboot" aria-hidden="true"></i>
+            Reiniciar Sistema do Dia
+          </button>
+        </div>
+      </div>
+
+      <!-- Histórico -->
+      <div class="historico-section" aria-label="Histórico de chamadas">
+        <div class="section-title">
+          <i class="bi bi-clock-history" aria-hidden="true"></i>
+          <h4>Últimas Chamadas</h4>
+        </div>
+        
+        <div class="historico-lista" id="historico-chamadas" aria-live="polite">
+          <div class="historico-item">
+            <span class="senha">P001</span>
+            <span class="hora">14:30</span>
+          </div>
+          <div class="historico-item">
+            <span class="senha">C001</span>
+            <span class="hora">14:28</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Rodapé -->
+  <footer class="footer" role="contentinfo" aria-label="Rodapé do sistema">
+    <div class="footer-content">
+      <div class="footer-left">
+        <i class="bi bi-calendar3" aria-hidden="true"></i>
+        <span id="data-atual" aria-live="polite"></span>
+      </div>
+      
+      <div class="footer-right">
+        <i class="bi bi-clock" aria-hidden="true"></i>
+        <span id="hora-atual" aria-live="polite"></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal de Configurações -->
+  <div class="modal" id="modal-config" role="dialog" aria-modal="true" aria-labelledby="modal-config-title" hidden>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modal-config-title">Configurações</h3>
+        <button class="btn-close" id="fechar-modal" aria-label="Fechar configurações">
+          <i class="bi bi-x" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="config-item">
+          <label>
+            <input type="checkbox" id="som-ativo" checked>
+            Ativar som nas chamadas
+          </label>
+        </div>
+        <div class="config-item">
+          <label>
+            <input type="checkbox" id="auto-save" checked>
+            Salvar automaticamente
+          </label>
+        </div>
+        <div class="config-item">
+          <label for="volume-som">Volume do som:</label>
+          <input type="range" id="volume-som" min="0" max="100" value="50" aria-valuetext="50%">
+        </div>
+        <div class="config-item">
+          <label for="select-voz">Voz para chamadas:</label>
+          <select id="select-voz" aria-label="Selecione a voz para chamadas"></select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botão de Configurações -->
+  <button class="btn-config" id="abrir-config" aria-label="Abrir configurações">
+    <i class="bi bi-gear" aria-hidden="true"></i>
+  </button>
+
+  <!-- Audio para notificações -->
+  <audio id="audio-chamada" preload="auto" aria-hidden="true">
+    <source src="beep.mp3" type="audio/mpeg">
+    <source src="beep.wav" type="audio/wav">
+    Seu navegador não suporta o elemento de áudio.
+  </audio>
+
+  <!-- Área para notificações dinâmicas -->
+  <div id="notificacoes-container" aria-live="assertive" class="sr-only"></div>
+
+  <!-- Script principal com defer para melhor performance -->
+  <script src="script.js" defer></script>
+</body>
+</html>
